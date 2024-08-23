@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Entrega Final - Inventario Herrajes WauDogShop</title>
+</head>
+
+<body>
+
+    <h1>Inventario de Herrajes Waudogshop</h1>
+
+    <!-- Agregar Nuevo Herraje -->
+    <!-- <div class="form"> -->
+    <div class="form">
+        <button class="elemento_std1" id="boton_agregar">Agregar nuevo Herraje</button>
+        <label class="elemento_std2" for="herraje1">Nombre</label>
+        <input type="text" class="elemento_std" minlength="7" maxlength="25" placeholder="Cuadro 2cm Dorado"
+            id="herraje1">
+        <label class="elemento_std2" for="stock1">Stock</label>
+        <input class="elemento_std1" type="number" min="1" max="999" placeholder="12" id="stock1">
+        <p class="elemento_std2" id="msg_1">Ingrese nombre y Stock</p>
+        <!-- <input type="submit" value="Agregar nuevo Herraje" id="boton_agregar" class="elemento_std1"> -->
+    </div>
+
+
+    <!-- Eliminar Herraje seleccionando por ID -->
+    <div class="form">
+        <button id="boton_eliminar">Eliminar Herraje</button>
+        <label for="id2">ID</label>
+        <input type="number" min="1" max="999" name="" placeholder="3" id="id2">
+        <p class="elemento_std3" id="msg_2">Ingrese ID de Herraje a eliminar</p>
+    </div>
+
+    <!-- Buscar Herraje -->
+    <div class="form">
+        <button id="boton_buscar">Buscar Herraje</button>
+        <label for="busqueda1">Buscar</label>
+        <input type="text" minlength="1" maxlength="10" name="" placeholder="Pasador" id="busqueda1">
+        <label class="" for=""></label>
+        <button id="boton_resetear_busqueda">Resetear Busqueda</button>
+        <p class="elemento_std3" id="msg_3">Ingrese busqueda</p>
+    </div>
+
+    <!-- Modificar Stock de Herraje seleccionando ID -->
+    <div class="form">
+        <button id="boton_modificar_stock">Modificar Stock</button>
+        <label for="id1">ID</label>
+        <input type="number" min="1" max="999" placeholder="5" name="" id="id1">
+        <label for="stock2">Stock</label>
+        <input type="number" min="-999" max="999" placeholder="10" id="stock2">
+        <p class="elemento_std3" id="msg_4">Ingrese el ID y la cantidad a sumar o restar</p>
+    </div>
+
+    <!-- Mostar el stock the herrajes que se encuentran por debajo de un nivel dado -->
+    <div class="form">
+        <button id="boton_stock_bajo">Mostrar Stock Bajo</button>
+        <label for="stock_bajo1">Nivel Stock</label>
+        <input type="number" min="1" max="999" placeholder="10" id="stock_bajo1">
+        <label class="" for=""></label>
+        <button id="boton_resetear_filtro">Resetear Filtro</button>
+        <p class="elemento_std3" id="msg_5">Ingrese el nivel de stock a revisar</p>
+    </div>
+
+    <!-- Reasignar/Resetear IDs de herrajes para que sean numeros consecutivos -->
+    <div class="form">
+        <button id="boton_id_reset">Resetear IDs de Herrajes</button>
+        <p class="elemento_std3" id="msg_6"></p>
+    </div>
+
+    <!-- Resetear inventario para que regrese al inventario inicial -->
+    <div class="form">
+        <button id="boton_reset">Resetear Inventario</button>
+        <p class="elemento_std3" id="msg_7"></p>
+    </div>
+
+    <!-- Guardar inventario actual en localStorage -->
+    <div class="form">
+        <button id="boton_guardar_local">Guardar en Local Storage</button>
+        <p class="elemento_std3" id="msg_8"></p>
+    </div>
+
+    <!-- Eliminar inventario de localStorage -->
+    <div class="form">
+        <button id="boton_eliminar_local">Eliminar Local Storage</button>
+        <p class="elemento_std3" id="msg_9"></p>
+    </div>
+
+    <!-- Cargar inventario de localStorage -->
+    <div class="form">
+        <button id="boton_cargar_local">Cargar Inventario de Local Storage</button>
+        <p class="elemento_std3" id="msg_10"></p>
+    </div>
+
+    <div id='table' class="table"> </div>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
