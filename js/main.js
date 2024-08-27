@@ -59,11 +59,20 @@ class Sistema {
     nuevoHerraje() {
         let nombre = document.getElementById("herraje1").value;
         let stock = document.getElementById("stock1").value;
-        if (nombre == "" || stock == ""|| stock < 0 || Number.isInteger(parseInt(nombre)) || nombre.length > 20 || nombre.length < 7) {
-            if(nombre.length > 20||nombre.length < 7){
+        mensajesReset()
+        if (nombre == "" || stock == "" || stock < 0 || Number.isInteger(parseInt(nombre)) || nombre.length > 20 || nombre.length < 7) {
+            if (nombre.length > 20 || nombre.length < 7) {
                 document.getElementById("msg_1").textContent = "El nombre debe tener entre 7 y 20 caracteres";
-            }else{
+
+                // Toastify
+                toastifyNegativo(`Herraje no agregado por catidad de caracteres 😑
+                    Intenta de nuevo por favor.`)
+                limpiarInputs()
+            } else {
                 document.getElementById("msg_1").textContent = "Ingresa datos validos por favor";
+                toastifyNegativo(`Los datos que ingresaste no son validos 😑
+                Intenta de nuevo por favor.`)
+                limpiarInputs()
             }
         } else {
             this.herrajes.push(new Herraje(nombre, stock))
@@ -72,6 +81,10 @@ class Sistema {
             limpiarInputs()
             mensajesReset()
             document.getElementById("msg_1").textContent = "Herraje agregado satisfactoriamente";
+
+            // Toastify
+            toastifyPositivo(`Herraje agregado satisfactoriamente 😁`)
+
         }
     }
 }
@@ -95,14 +108,23 @@ function filtrarHerrajes(herraje) {
     mostrarTabla(result);
     actualizarTabla(result)
     mensajesReset()
+
     if (result.length == 0) {
         // alert(`La busqueda de ${busqueda} arrojo 0 resultados`);
         document.getElementById("table").innerHTML = html_base
         document.getElementById("msg_3").textContent = `La busqueda de ${busqueda} arrojo 0 resultados`;
+
+        // Toastify
+        toastifyNegativo(
+            `La busqueda no ha dado resultados 🤔
+            Intenta de nuevo por favor.`)
+    } else {
+        // console.log(`Se encontraron ${result.length} herrajes`);
+        document.getElementById("msg_3").textContent = `Se encontraron ${result.length} herrajes`;
+        limpiarInputs()
+        // Toastify
+        toastifyPositivo(`Se encontraron ${result.length} resultados 😁`)
     }
-    // console.log(`Se encontraron ${result.length} herrajes`);
-    document.getElementById("msg_3").textContent = `Se encontraron ${result.length} herrajes`;
-    limpiarInputs()
 }
 
 //? Funcion 4: Agregar incidencia, modificar inventario.
@@ -118,9 +140,21 @@ function agregarIncidencia(herrajes) {
         limpiarInputs()
         mensajesReset()
         document.getElementById("msg_4").textContent = "Stock actualizado satisfactoriamente";
+
+        cantidad < 0 ? toastifyPositivo(`Se han restado ${Math.abs(cantidad)} items del herraje "${herrajes[id_herraje - 1].nombre}"`) : toastifyPositivo(`Se han agregado ${cantidad} items del herraje "${herrajes[id_herraje - 1].nombre}"`);
+
+        // if (cantidad < 0) {
+        //     toastifyPositivo(`Se han restado ${Math.abs(cantidad)} items del herraje "${herrajes[id_herraje - 1].nombre}"`)
+        // } else {
+        //     toastifyPositivo(`Se han agregado ${cantidad} items del herraje "${herrajes[id_herraje - 1].nombre}"`)
+        // }
+
     } else {
         document.getElementById("msg_4").textContent = "ID no encontrado";
         limpiarInputs()
+        // Toastify
+        toastifyNegativo(`No se ha encontrado el ID que buscas 😑
+                        Intenta de nuevo por favor.`)
     }
 
 
@@ -137,8 +171,17 @@ function stockBajo(herrajes) {
     if (result.length == 0) {
         document.getElementById("msg_5").textContent = `La busqueda de stock menor o igual a ${busqueda} arrojo 0 resultados`;
         document.getElementById("table").innerHTML = html_base
+        // Toastify
+        toastifyNegativo(
+            `El filtro no ha dado resultados 🤔
+            Intenta cambiar el stock minimo.`)
+
+
     } else {
         document.getElementById("msg_5").textContent = `Se encontraron ${result.length} herrajes`;
+        // Toastify
+        toastifyPositivo(
+            `Se encontraron ${result.length} herrajes por debajo del stock minimo 😁`)
     }
     limpiarInputs()
 }
@@ -146,8 +189,13 @@ function stockBajo(herrajes) {
 //? Funcion 6: Eliminar herraje
 function eliminarHerraje(herrajes) {
     let id_herraje = parseInt(document.getElementById("id2").value, 10);
-    if (isNaN(id_herraje)){
+    if (isNaN(id_herraje)) {
         document.getElementById("msg_2").textContent = "Por favor ingresa un ID";
+        // Toastify
+        toastifyNegativo(
+            `El ID está vacío 🤔`)
+        limpiarInputs()
+        mensajesReset()
     } else {
         const herrajeID = herrajes.find((herraje) => herraje.id === id_herraje)
         const index = herrajes.indexOf(herrajeID);
@@ -155,12 +203,21 @@ function eliminarHerraje(herrajes) {
         if (index === -1) {
             document.getElementById("msg_2").textContent = `No se encontro el herraje con ID ${id_herraje}`;
             // console.log(`No se encontro el herraje con ID ${id_herraje}`);
+            // Toastify
+            toastifyNegativo(
+                `No se ha encontrado el ID que buscas 😑
+                Intenta de nuevo por favor.`)
+            limpiarInputs()
             return;
         } else {
             herrajes.splice([index], 1);
             mostrarTabla(herrajes);
             actualizarTabla(herrajes)
             document.getElementById("msg_2").textContent = "Herraje eliminado satisfactoriamente";
+            // Toastify
+            toastifyPositivo(
+                `El herraje ${id_herraje} se ha eliminado satisfactoriamente 😁`)
+            limpiarInputs()
         }
         limpiarInputs()
     }
@@ -175,6 +232,9 @@ function idReset(herrajes) {
     // mostrarTabla(herrajes);
     actualizarTabla(herrajes)
     document.getElementById("msg_6").textContent = "IDs de Herrajes reseteados satisfactoriamente";
+    // Toastify
+    toastifyPositivo(
+        `Los IDs han sido reseteados satisfactorimente 😁`)
 }
 
 //? Funcion 8: Regresar al inventario original inicial
@@ -188,6 +248,9 @@ function inventarioOriginal() {
     actualizarTabla(herrajes);
     mensajesReset()
     document.getElementById("msg_7").textContent = "Tabla reseteada a parametros iniciales";
+    // Toastify
+    toastifyPositivo(
+        `La tabla ha sido regresada a su estado original 😁`)
 
 }
 
@@ -195,6 +258,9 @@ function inventarioOriginal() {
 function inventarioReset(herrajes) {
     mensajesReset()
     actualizarTabla(herrajes)
+    // Toastify
+    toastifyPositivo(
+        `Se ha quitado el filtro de busqueda 😁`)
 }
 
 //? Funcion 10: Actualizar tabla en el HTML usando el DOM
@@ -215,7 +281,9 @@ function vaciarLocal() {
     localStorage.clear();
     mensajesReset()
     document.getElementById("msg_9").textContent = "Local Storage eliminado";
-
+    // Toastify
+    toastifyPositivo(
+        `El Local Storage ha sido eliminado 😁`)
 }
 
 
@@ -280,6 +348,9 @@ function guardarLocal() {
     localStorage.setItem("inventario", inventarioJSON);
     mensajesReset()
     document.getElementById("msg_8").textContent = "Inventario guardado en Local Storage";
+    // Toastify
+    toastifyPositivo(
+        `El inventario actual se ha guardado en el Local Storage 😁`)
 
 }
 
@@ -293,55 +364,46 @@ function cargarLocal() {
     if (inventario == null) {
         mensajesReset()
         document.getElementById("msg_10").textContent = "Local Storage vacío";
+        // Toastify
+        toastifyNegativo(
+            `El Local Storage se encuentra vacío 🤔`)
+
         return;
     } else {
         herrajes.push(...inventario);
         actualizarTabla(herrajes);
         mensajesReset()
         document.getElementById("msg_10").textContent = "Inventario cargado desde Local Storage";
+        // Toastify
+        toastifyPositivo(
+            `El inventario se ha cargado desde Local Storage 😁`)
     }
-
-
 }
 
 
+//? Funcion toastify positivo
+function toastifyPositivo(mensaje) {
+    Toastify({
+        text: mensaje,
+        duration: 5000,
+        gravity: 'bottom',
+        style: {
+            background: 'linear-gradient(to right, #7BA67C, #4FAA53)',
+        },
+    }).showToast();
+}
 
+//? Funcion toastify negativo
+function toastifyNegativo(mensaje) {
+    Toastify({
+        text: mensaje,
+        duration: 5000,
+        gravity: 'bottom',
+        style: {
+            background: 'linear-gradient(to right, #755150, #E53935)',
+        },
+    }).showToast();
+}
 
-
-
-
-
-
-
-
-
-
-
-// //? Funciones para hacer validacion de datos de entrada.
-
-// function solicitarDato(tipo, mensaje, sugerencia = '') {
-//     let dato;
-//     if (tipo == 'entero_positivo') {
-//         do {
-//             dato = parseFloat(prompt(mensaje, sugerencia));
-//         } while (isNaN(dato) || dato < 0);
-//     }
-//     else if (tipo == 'entero') {
-//         do {
-//             dato = parseInt(prompt(mensaje, sugerencia));
-//         } while (isNaN(dato));
-//     }
-//     else if (tipo == 'cadena') {
-//         do {
-//             dato = prompt(mensaje, sugerencia);
-//         } while (dato == '');
-//     }
-//     else if (tipo == 'cadena_minusculas') {
-//         do {
-//             dato = prompt(mensaje, sugerencia).toLocaleLowerCase();
-//         } while (dato == '');
-//     }
-//     return dato;
-// }
 
 
