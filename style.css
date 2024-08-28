@@ -58,6 +58,15 @@ label {
     width: 75px;
 }
 
+.title{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .form {
     display: flex;
     flex-direction: row;

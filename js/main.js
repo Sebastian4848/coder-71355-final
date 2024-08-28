@@ -60,6 +60,7 @@ class Sistema {
         let nombre = document.getElementById("herraje1").value;
         let stock = document.getElementById("stock1").value;
         mensajesReset()
+        updatePokemon()
         if (nombre == "" || stock == "" || stock < 0 || Number.isInteger(parseInt(nombre)) || nombre.length > 20 || nombre.length < 7) {
             if (nombre.length > 20 || nombre.length < 7) {
                 document.getElementById("msg_1").textContent = "El nombre debe tener entre 7 y 20 caracteres";
@@ -108,6 +109,7 @@ function filtrarHerrajes(herraje) {
     mostrarTabla(result);
     actualizarTabla(result)
     mensajesReset()
+    updatePokemon()
 
     if (result.length == 0) {
         // alert(`La busqueda de ${busqueda} arrojo 0 resultados`);
@@ -132,6 +134,7 @@ function agregarIncidencia(herrajes) {
     let id_herraje = document.getElementById("id1").value;
     let cantidad = parseInt(document.getElementById("stock2").value, 10);
     let idExists = herrajes.some(herraje => herraje.id == id_herraje);
+    updatePokemon()
 
     if (idExists) {
         herrajes[id_herraje - 1].stock = herrajes[id_herraje - 1].stock + cantidad;
@@ -168,6 +171,7 @@ function stockBajo(herrajes) {
     mostrarTabla(result);
     actualizarTabla(result)
     mensajesReset()
+    updatePokemon()
     if (result.length == 0) {
         document.getElementById("msg_5").textContent = `La busqueda de stock menor o igual a ${busqueda} arrojo 0 resultados`;
         document.getElementById("table").innerHTML = html_base
@@ -189,6 +193,7 @@ function stockBajo(herrajes) {
 //? Funcion 6: Eliminar herraje
 function eliminarHerraje(herrajes) {
     let id_herraje = parseInt(document.getElementById("id2").value, 10);
+    updatePokemon()
     if (isNaN(id_herraje)) {
         document.getElementById("msg_2").textContent = "Por favor ingresa un ID";
         // Toastify
@@ -226,6 +231,7 @@ function eliminarHerraje(herrajes) {
 //? Funcion 7: Regenerar IDs
 function idReset(herrajes) {
     mensajesReset()
+    updatePokemon()
     for (let i = 0; i < herrajes.length; i++) {
         herrajes[i].id = i + 1;
     }
@@ -247,6 +253,7 @@ function inventarioOriginal() {
     idReset(herrajes)
     actualizarTabla(herrajes);
     mensajesReset()
+    updatePokemon()
     document.getElementById("msg_7").textContent = "Tabla reseteada a parametros iniciales";
     // Toastify
     toastifyPositivo(
@@ -254,8 +261,9 @@ function inventarioOriginal() {
 
 }
 
-// //? Funcion 9: Resetear Diplay Inventario
+// //? Funcion 9: Resetear Display Inventario
 function inventarioReset(herrajes) {
+    updatePokemon()
     mensajesReset()
     actualizarTabla(herrajes)
     // Toastify
@@ -280,6 +288,7 @@ function actualizarTabla(array) {
 function vaciarLocal() {
     localStorage.clear();
     mensajesReset()
+    updatePokemon()
     document.getElementById("msg_9").textContent = "Local Storage eliminado";
     // Toastify
     toastifyPositivo(
@@ -347,6 +356,7 @@ function guardarLocal() {
     let inventarioJSON = JSON.stringify(herrajes);
     localStorage.setItem("inventario", inventarioJSON);
     mensajesReset()
+    updatePokemon()
     document.getElementById("msg_8").textContent = "Inventario guardado en Local Storage";
     // Toastify
     toastifyPositivo(
@@ -357,7 +367,7 @@ function guardarLocal() {
 
 //? Funcion 15: Cargar Local Storage
 function cargarLocal() {
-
+    updatePokemon()
     herrajes.length = 0;
     let inventarioJSON = localStorage.getItem("inventario");
     let inventario = JSON.parse(inventarioJSON);
@@ -406,4 +416,22 @@ function toastifyNegativo(mensaje) {
 }
 
 
+//? Funcion que actualiza las imagenes de pokemon 
+let contador = 1;
 
+function updatePokemon() {
+    document.getElementsByClassName('pokeimg')[0].src = ""
+    document.getElementsByClassName('pokeimg')[1].src = ""
+    fetch(`https://pokeapi.co/api/v2/pokemon/${contador}`)
+        .then((response) => response.json())
+        .then((datos) => renderPokemon(datos))
+        .catch((error) => console.log(error))
+    contador++
+}
+
+function renderPokemon(datos) {
+    {
+        document.getElementsByClassName('pokeimg')[0].src = datos.sprites.front_default
+        document.getElementsByClassName('pokeimg')[1].src = datos.sprites.front_default
+    }
+}
