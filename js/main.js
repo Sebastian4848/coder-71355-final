@@ -101,6 +101,8 @@ function mostrarTabla(datos) {
     // console.table(datos);
 }
 mostrarTabla(herrajes)
+let contador = 1;
+updatePokemon()
 
 //? Funcion 3: Buscar herrajes.
 function filtrarHerrajes(herraje) {
@@ -417,7 +419,6 @@ function toastifyNegativo(mensaje) {
 
 
 //? Funcion que actualiza las imagenes de pokemon 
-let contador = 1;
 
 function updatePokemon() {
     document.getElementsByClassName('pokeimg')[0].src = ""

@@ -20,25 +20,19 @@ body {
     align-items: center;
 }
 
-h1,
-h4,
-h5 {
+h1,h4 {
     margin: 0;
+    padding: 10px;
 }
 
 h1 {
-    font-size: 6vh;
+    font-size: 6vh; 
     color: --color2;
 }
 
-
 h4 {
-    margin-bottom: 5vh;
-    margin-right: -2vw;
-
     font-size: 4vh;
-    color: var(--color2);
-
+    color: var(--color3);
 }
 
 button,
@@ -79,6 +73,17 @@ label {
     border-color: black;
     border-style: solid;
     width: 100%;
+}
+
+.form_login{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background-color: dimgray;
+
 }
 
 .table{
