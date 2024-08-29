@@ -20,13 +20,14 @@ body {
     align-items: center;
 }
 
-h1,h4 {
+h1,
+h4 {
     margin: 0;
     padding: 10px;
 }
 
 h1 {
-    font-size: 6vh; 
+    font-size: 6vh;
     color: --color2;
 }
 
@@ -52,7 +53,7 @@ input {
     width: 75px;
 } */
 
-.title{
+.title {
     height: 100px;
     width: 100%;
     display: flex;
@@ -67,7 +68,7 @@ input {
     justify-content: left;
     align-items: center;
     padding: 6px 0px 6px 0px;
-    margin:  6px 0px 6px 0px;
+    margin: 6px 0px 6px 0px;
     background-color: var(--color2);
     border-width: 1px;
     border-color: black;
@@ -75,7 +76,7 @@ input {
     width: 100%;
 }
 
-.form_login{
+.form_login {
     width: 300px;
     height: 240px;
     display: flex;
@@ -88,7 +89,7 @@ input {
 
 }
 
-.table{
+.table {
     width: 50%;
 }
 
@@ -98,7 +99,8 @@ table {
     width: 100%;
 }
 
-td, th {
+td,
+th {
     border: 1px solid #252525;
     text-align: left;
     padding: 4px 4px 4px 4px;
@@ -111,57 +113,3 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background-color: #b6b6b6;
 }
-
-
-/* .elemento_std1{
-    width:300px;
-}
-.elemento_std1{
-    width:300px;
-} */
-/* form {
-    margin-top: 5vh;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    color: var(--color3);
-}
-
-label {
-    margin-top: 1vh;
-}
-
-input {
-    padding: 2%;
-} */
-
-/* input[type='submit'] {
-    background-color: var(--bg-color);
-    color: var(--color3);
-    font-weight: bold;
-    border: solid var(--color1) 2px;
-    margin-top: 3vh;
-    transition:0.5s background-color ;
-}
-
-
-input[type='submit']:hover {
-    background-color: var(--color1);
-    cursor: pointer;
-}
- */
-
-
-/* @keyframes neon {
-    25% {text-shadow: 0 0 4vh;}
-    50% {text-shadow: 0 0 10vh;}
-    75% {text-shadow: 0 0 8vh;}
-}
-
-@keyframes color_change {
-    35% {color: #3dd908}
-    75% {color: #c2d919}
-}
-
-
- */
