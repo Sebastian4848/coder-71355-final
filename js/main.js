@@ -136,23 +136,24 @@ function agregarIncidencia(herrajes) {
     let id_herraje = document.getElementById("id1").value;
     let cantidad = parseInt(document.getElementById("stock2").value, 10);
     let idExists = herrajes.some(herraje => herraje.id == id_herraje);
+    let index = herrajes.findIndex(herraje => herraje.id == id_herraje)
+
     updatePokemon()
 
     if (idExists) {
-        herrajes[id_herraje - 1].stock = herrajes[id_herraje - 1].stock + cantidad;
-        mostrarTabla(herrajes);
-        actualizarTabla(herrajes)
-        limpiarInputs()
-        mensajesReset()
-        document.getElementById("msg_4").textContent = "Stock actualizado satisfactoriamente";
-
-        cantidad < 0 ? toastifyPositivo(`Se han restado ${Math.abs(cantidad)} items del herraje "${herrajes[id_herraje - 1].nombre}"`) : toastifyPositivo(`Se han agregado ${cantidad} items del herraje "${herrajes[id_herraje - 1].nombre}"`);
-
-        // if (cantidad < 0) {
-        //     toastifyPositivo(`Se han restado ${Math.abs(cantidad)} items del herraje "${herrajes[id_herraje - 1].nombre}"`)
-        // } else {
-        //     toastifyPositivo(`Se han agregado ${cantidad} items del herraje "${herrajes[id_herraje - 1].nombre}"`)
-        // }
+        if (isNaN(cantidad)) {
+            // Toastify
+            toastifyNegativo(`Los datos que ingresaste no son validos 😑
+                Intenta de nuevo por favor.`)
+        } else {
+            herrajes[index].stock = herrajes[index].stock + cantidad;
+            mostrarTabla(herrajes);
+            actualizarTabla(herrajes)
+            limpiarInputs()
+            mensajesReset()
+            document.getElementById("msg_4").textContent = "Stock actualizado satisfactoriamente";
+            cantidad < 0 ? toastifyPositivo(`Se han restado ${Math.abs(cantidad)} items del herraje "${herrajes[index].nombre}"`) : toastifyPositivo(`Se han agregado ${cantidad} items del herraje "${herrajes[index].nombre}"`);
+        }
 
     } else {
         document.getElementById("msg_4").textContent = "ID no encontrado";
@@ -311,6 +312,7 @@ let boton_reset = document.getElementById("boton_reset")
 let boton_guardar_local = document.getElementById("boton_guardar_local")
 let boton_eliminar_local = document.getElementById("boton_eliminar_local")
 let boton_cargar_local = document.getElementById("boton_cargar_local")
+let boton_logout = document.getElementById("boton_logout")
 
 //? Agregando event listeners a los botones
 
@@ -326,6 +328,7 @@ boton_resetear_filtro.addEventListener('click', () => { inventarioReset(herrajes
 boton_guardar_local.addEventListener('click', () => { guardarLocal() })
 boton_eliminar_local.addEventListener('click', () => { vaciarLocal() })
 boton_cargar_local.addEventListener('click', () => { cargarLocal() })
+boton_logout.addEventListener('click', () => { logout() })
 
 
 //? Funcion 11: Limpiar todos los inputs
@@ -435,4 +438,14 @@ function renderPokemon(datos) {
         document.getElementsByClassName('pokeimg')[0].src = datos.sprites.front_default
         document.getElementsByClassName('pokeimg')[1].src = datos.sprites.front_default
     }
+}
+
+//? Funcion logout
+
+function logout(){
+    // Toastify
+    toastifyPositivo(`Que vuelvas pronto 😁`);
+    setTimeout(() => {
+        location.href = 'login.html';
+    }, 1550);
 }
